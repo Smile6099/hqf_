@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>韩清枫 - 个人简历</title>
+  <style>
+    :root {
+      --primary: #16a34a;
+      --primary-light: #22c55e;
+      --primary-dark: #15803d;
+      --accent: #0ea5e9;
+      --bg: #ffffff;
+      --bg-alt: #f0fdf4;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --text-light: #4b5563;
+      --border: #e5e7eb;
+      --shadow: rgba(22,163,74,0.12);
+      --transition: 200ms ease;
+    }
+    [data-theme="dark"] {
+      --primary: #22c55e;
+      --primary-light: #4ade80;
+      --primary-dark: #16a34a;
+      --accent: #38bdf8;
+      --bg: #111827;
+      --bg-alt: #0f2016;
+      --card-bg: #1f2937;
+      --text: #f3f4f6;
+      --text-light: #d1d5db;
+      --border: #374151;
+      --shadow: rgba(34,197,94,0.15);
+    }
+    * { margin:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html {scroll-behavior:auto;}
+      * {animation:none !important;transition:none !important;}
+    }
+    body {
+      font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.6; transition: var(--transition);
+    }
+    .container { max-width:1100px; margin:0 auto; padding:0 1rem; }
+    header.nav-bar {
+      position:sticky; top:0; z-index:50;
+      background:var(--card-bg); border-bottom:1px solid var(--border);
+      box-shadow:0 2px 8px var(--shadow);
+    }
+    .nav-inner { display:flex; justify-content:space-between; align-items:center; padding:0.75rem 1rem; }
+    .nav-brand-wrap { display:flex; flex-direction:column; }
+    .nav-puzzle-slogan { font-size:0.72rem; color:var(--primary); opacity:0.85; }
+    .nav-brand { font-weight:700; font-size:1.25rem; color:#000; }
+    [data-theme="dark"] .nav-brand { color:#fff; }
+    .nav-links { display:flex; gap:1.25rem; align-items:center; }
+    .nav-links a { color:var(--text); text-decoration:none; font-size:0.9rem; transition:var(--transition); }
+    .nav-links a:hover { color:var(--primary); }
+    button {
+      font:inherit; cursor:pointer; border:none; border-radius:8px;
+      padding:0.5rem 0.8rem; transition:var(--transition);
+    }
+    .btn-primary { background:var(--primary); color:white; }
+    .btn-primary:hover { background:var(--primary-dark); }
+    .btn-ghost { background:transparent; color:var(--text); border:1px solid var(--border); }
+    .btn-ghost:hover { border-color:var(--primary); color:var(--primary); }
+
+    /* ===== Hero：拼图背景纹理 + 圆形头像 ===== */
+    .hero {
+      padding:4rem 0 2.5rem; background:var(--bg-alt);
+      position:relative; overflow:hidden;
+    }
+    .hero::before {
+      content:""; position:absolute; inset:0;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><g fill='none' stroke='%2316a34a' stroke-width='1.2' opacity='0.4'><path d='M35 12h22c0-7 10-7 10 0h22v22c7 0 7 10 0 10v22H67c0 7-10 7-10 0H35V44c-7 0-7-10 0-10V12z'/><path d='M95 82h22c0-7 10-7 10 0h22v22c7 0 7 10 0 10v22h-22c0 7-10 7-10 0H95v-22c-7 0-7-10 0-10V82z' opacity='0.7'/></g></svg>");
+      background-size: 150px 150px;
+      opacity: 0.16;
+      pointer-events:none; z-index:0;
+    }
+    [data-theme="dark"] .hero::before { opacity: 0.08; }
+    .hero-inner {
+      display:grid; grid-template-columns:1.1fr 0.9fr; gap:2rem; align-items:center;
+      position:relative; z-index:1;
+    }
+    @media (max-width:768px) {
+      .hero-inner { grid-template-columns:1fr; }
+      .nav-links { gap:0.5rem; }
+      .nav-links span { display:none; }
+    }
+    .hero-top {
+      display:flex; align-items:center; gap:1.25rem; margin-bottom:0.5rem; flex-wrap:wrap;
+    }
+    .avatar-circle {
+      width:96px; height:96px; border-radius:50%;
+      object-fit:cover; border:3px solid var(--primary);
+      box-shadow:0 4px 14px var(--shadow);
+      flex-shrink:0; background:#e5e7eb;
+    }
+    .hero h1 {
+      font-size:2.4rem; color:#000; margin-bottom:0.5rem; font-weight:800;
+    }
+    [data-theme="dark"] .hero h1 { color:#fff; }
+    .hero-sub { font-size:1.1rem; color:var(--text-light); margin-bottom:1rem; }
+    .badge-list { display:flex; flex-wrap:wrap; gap:0.5rem; margin:1rem 0; }
+    .badge {
+      background:rgba(22,163,74,0.12); color:var(--primary-dark);
+      padding:0.3rem 0.7rem; border-radius:99px; font-size:0.85rem; font-weight:500;
+    }
+    [data-theme="dark"] .badge { background:rgba(34,197,94,0.18); color:var(--primary-light); }
+    .contact-row { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:1rem; }
+    section { padding:2.5rem 0; }
+    .section-title {
+      font-size:1.6rem; margin-bottom:1.5rem; color:var(--primary-dark);
+      border-left:4px solid var(--primary); padding-left:0.75rem;
+    }
+    .grid-3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
+    .card {
+      background:var(--card-bg); border:1px solid var(--border); border-radius:12px;
+      padding:1.25rem; transition:var(--transition);
+    }
+    .card:hover {
+      transform:translateY(-4px); box-shadow:0 8px 20px var(--shadow);
+      border-color:rgba(22,163,74,0.3);
+    }
+    .card h3 { color:var(--primary); margin-bottom:0.4rem; font-size:1.1rem; }
+    .tabs-wrap { margin:1rem 0; }
+    .tab-list { display:flex; gap:0.25rem; border-bottom:1px solid var(--border); margin-bottom:1rem; }
+    .tab-btn {
+      padding:0.7rem 1rem; background:transparent; border-bottom:3px solid transparent;
+      border-radius:8px 8px 0 0; color:var(--text-light); font-weight:500;
+    }
+    .tab-btn[aria-selected="true"] { border-bottom-color:var(--primary); color:var(--primary); }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; animation:fadeIn 220ms ease; }
+    @keyframes fadeIn { from {opacity:0; transform:translateY(6px);} to {opacity:1; transform:translateY(0);} }
+    .timeline-item { margin-bottom:1.2rem; padding-bottom:1rem; border-bottom:1px dashed var(--border); }
+    .timeline-item:last-child { border-bottom:none; }
+    .timeline-head { display:flex; justify-content:space-between; flex-wrap:wrap; }
+    .timeline-title { font-weight:600; color:var(--primary); }
+    .timeline-date { color:var(--text-light); font-size:0.9rem; }
+    .skill-row { margin-bottom:0.8rem; }
+    .skill-label { display:flex; justify-content:space-between; font-size:0.9rem; margin-bottom:0.25rem; }
+    .skill-bar { height:8px; background:#e5e7eb; border-radius:99px; overflow:hidden; }
+    [data-theme="dark"] .skill-bar { background:#374151; }
+    .skill-fill { height:100%; background:linear-gradient(90deg,var(--primary),var(--primary-light)); border-radius:99px; }
+    .quote-card {
+      border-left:4px solid var(--primary); padding:1rem; background:var(--bg-alt); border-radius:0 10px 10px 0;
+    }
+    footer { text-align:center; padding:2rem; color:var(--text-light); font-size:0.9rem; border-top:1px solid var(--border); }
+    .back-top {
+      position:fixed; bottom:1.2rem; right:1.2rem; opacity:0; pointer-events:none;
+      background:var(--primary); color:white; border-radius:99px; width:44px; height:44px;
+      display:grid; place-items:center; transition:var(--transition);
+    }
+    .back-top.visible { opacity:1; pointer-events:auto; }
+    .puzzle-icon { display:inline-block; width:18px; height:18px; vertical-align:middle; margin-right:4px; }
+    @media print {
+      :root { --primary:#15803d; }
+      body { background:#fff; color:#000; }
+      header.nav-bar, .back-top, button { display:none !important; }
+      .tab-panel { display:block !important; }
+      .card { box-shadow:none; border:1px solid #ccc; }
+      section { padding:0.6rem 0; page-break-inside:avoid; }
+      .hero { background:#fff; padding:1rem 0; }
+      .hero::before { display:none; }
+      .nav-puzzle-slogan { display:none; }
+      .hero h1 { color:#000 !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav-bar">
+    <div class="container nav-inner">
+      <div class="nav-brand-wrap">
+        <div class="nav-brand">韩清枫</div>
+        <div class="nav-puzzle-slogan">
+          <svg class="puzzle-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19,20H5V4H7V7H17V4H19M12,2A1,1 0 0,1 13,3A1,1 0 0,1 12,4A1,1 0 0,1 11,3A1,1 0 0,1 12,2M19,2H14.82C14.4,0.84 13.3,0 12,0C10.7,0 9.6,0.84 9.18,2H5A2,2 0 0,0 3,4V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V4A2,2 0 0,0 19,2Z"/>
+          </svg>
+          如果我是拼图，你能拼出多少
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#about">简介</a>
+        <a href="#highlights">亮点</a>
+        <a href="#experience">经历</a>
+        <a href="#projects">项目</a>
+        <a href="#skills">技能</a>
+        <a href="#edu">教育</a>
+        <button id="themeBtn" class="btn-ghost">🌓</button>
+        <button id="printBtn" class="btn-ghost">打印PDF</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="about">
+    <div class="container hero-inner">
+      <div>
+        <div class="hero-top">
+          <img src="头像.jpg" alt="韩清枫头像" class="avatar-circle"
+               onerror="this.style.display='none'">
+          <h1>韩清枫</h1>
+        </div>
+        <p class="hero-sub">求职方向：软件工程 / AI应用开发 / 产品技术实习｜山东枣庄｜青岛</p>
+        <p>软件工程本科，擅长AI辅助编程、前端建站、产品构想与PPT结构化表达，英文技术文档阅读能力良好，具备复杂任务拆解与长期攻坚能力。</p>
+        <div class="badge-list" id="heroBadges"></div>
+        <div class="contact-row" id="contactBtns"></div>
+      </div>
+      <div class="quote-card">
+        <h3>自我评价</h3>
+        <p id="selfIntro"></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="highlights">
+    <div class="container">
+      <h2 class="section-title">亮点成果</h2>
+      <div class="grid-3" id="highlightsWrap"></div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="container">
+      <h2 class="section-title">经历</h2>
+      <div class="tabs-wrap">
+        <div class="tab-list" role="tablist" aria-label="经历分类">
+          <button class="tab-btn" role="tab" aria-selected="true" aria-controls="tab-intern" id="btn-intern">实习/工作</button>
+          <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-campus" id="btn-campus">校园实践</button>
+        </div>
+        <div class="tab-panel active" id="tab-intern" role="tabpanel"></div>
+        <div class="tab-panel" id="tab-campus" role="tabpanel"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title">项目经历</h2>
+      <div class="tabs-wrap">
+        <div class="tab-list" role="tablist" aria-label="项目分类">
+          <button class="tab-btn" role="tab" aria-selected="true" aria-controls="tab-personal" id="btn-personal">个人项目</button>
+        </div>
+        <div class="tab-panel active" id="tab-personal" role="tabpanel">
+          <div class="grid-3" id="projectCards"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">专业技能</h2>
+      <div class="grid-3" id="skillMatrix"></div>
+    </div>
+  </section>
+
+  <section id="edu">
+    <div class="container">
+      <h2 class="section-title">教育背景 & 证书</h2>
+      <div class="grid-3" id="eduCertWrap"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>韩清枫 · 个人简历 | 更新于2026</p>
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop">↑</button>
+
+<script>
+const resume = {
+  name: "韩清枫",
+  phone: "19863755712",
+  emailUser: "2544224946",
+  emailDomain: "qq.com",
+  wechat: "hjq2544224946",
+  jobTarget: "软件工程 / AI应用开发 / 产品技术实习",
+  location: "山东枣庄｜青岛",
+  onlineWorks: "",
+  education: {
+    school: "青岛科技大学",
+    major: "软件工程｜本科",
+    time: "",
+    courses: "数据结构、算法、数据库、Web开发、人工智能导论、软件工程等",
+    english: "英语能力突出，具备较强的技术文档阅读、英文资料检索与跨文化沟通能力",
+    direction: "AI编程、效率工具开发、前端/全栈实践、PPT可视化表达"
+  },
+  skillBadges: ["AI编程","前端开发","产品构想","PPT结构化","英文技术阅读","任务拆解"],
+  highlights: [
+    {title:"AI建站实践",desc:"独立利用AI工具完成个人简历网站搭建，从构思到页面落地，掌握页面结构、样式与基础交互"},
+    {title:"APP产品构想",desc:"提出短视频搜索直达APP方案，梳理产品思路、原型与交互，具备用户体验意识"},
+    {title:"长期攻坚能力",desc:"完成2份1000片高难度拼图，验证长周期任务拆解、细节识别与稳定交付能力"},
+    {title:"英文信息检索",desc:"快速阅读英文技术文档、AI工具手册，辅助项目调研与方案学习"},
+    {title:"结构化表达",desc:"熟练制作高质量PPT，把技术逻辑、项目成果结构化呈现"}
+  ],
+  experience: { intern: [], campus: [] },
+  projects: [
+    {
+      name:"AI生成个人网站", type:"个人项目", time:"",
+      situation:"希望建立个人在线展示窗口，集中呈现个人信息、技能、项目与联系方式",
+      action:"借助AI编程工具完成网站结构设计、页面内容生成、基础样式优化与部署准备",
+      result:"独立生成可展示的个人网站雏形，降低建站门槛，缩短从构思到上线的时间",
+      highlight:"将AI能力转化为实际作品，体现快速学习、工具应用与自我表达能力", link:""
+    },
+    {
+      name:"短视频搜索直达APP", type:"个人项目", time:"",
+      situation:"针对短视频内容分散、搜索路径长、用户寻找目标视频效率低的问题，提出“搜索直达”工具构想",
+      action:"借助AI完成产品思路梳理、功能设计、APP原型/生成方案与核心交互逻辑搭建",
+      result:"形成短视频搜索直达APP方案/原型，优化用户从搜索到目标内容的路径，提升查找效率",
+      highlight:"关注真实使用场景，具备产品意识、用户体验意识与AI落地能力", link:""
+    },
+    {
+      name:"1000片拼图挑战", type:"个人长期项目", time:"",
+      situation:"选择高难度1000片拼图作为长期专注力与耐心训练任务",
+      action:"制定分区、分类、边缘优先与颜色识别策略，持续投入时间完成复杂图案拼合",
+      result:"已成功完成2份1000片拼图，验证长期专注、细节识别与目标拆解能力",
+      highlight:"体现责任心、抗压能力、持续攻坚能力与稳定交付特质，可迁移到项目推进与调试", link:""
+    },
+    {
+      name:"乐高/养成系小游戏/追剧内容整理", type:"兴趣实践", time:"",
+      situation:"长期喜欢乐高搭建、养成系小游戏与追剧磕CP，积累结构化整理与内容分析习惯",
+      action:"对剧情线、角色关系、养成路径与搭建逻辑进行归纳，形成个人化记录与分享素材",
+      result:"提升信息整理、模式识别、长期规划与内容表达能力，可辅助产品分析、用户洞察与PPT呈现",
+      highlight:"兴趣驱动学习，具备持续投入与细节敏感度", link:""
+    }
+  ],
+  skillMatrix: [
+    {cat:"编程与AI应用",items:[
+      {name:"AI编程工具",pct:80},{name:"软件工程基础",pct:70},{name:"需求拆解与调试",pct:75}
+    ]},
+    {cat:"前端/网站开发",items:[
+      {name:"HTML/CSS/JS",pct:68},{name:"页面交互与布局",pct:65},{name:"响应式设计",pct:60}
+    ]},
+    {cat:"综合能力",items:[
+      {name:"英文技术阅读",pct:78},{name:"PPT结构化输出",pct:82},{name:"项目任务拆解",pct:85}
+    ]}
+  ],
+  certificates: [],
+  selfDesc: "软件工程背景，具备AI编程、网站生成、APP构想与PPT表达能力，能够将工具能力快速转化为项目成果。英语基础较好，责任心强，擅长在复杂任务中保持耐心与专注。性格内向但交付稳定，喜欢拼图、乐高与养成系内容，具备长期攻坚、细节把控与目标拆解优势。期待在软件工程、AI应用开发、产品技术等方向持续成长并创造可量化价值。"
+};
+
+const badgeWrap = document.getElementById('heroBadges');
+resume.skillBadges.forEach(b=>badgeWrap.innerHTML += `<span class="badge">${b}</span>`);
+
+const contactWrap = document.getElementById('contactBtns');
+const fullEmail = resume.emailUser + "@" + resume.emailDomain;
+contactWrap.innerHTML = `
+  <a href="tel:${resume.phone}" class="btn-primary">📞 ${resume.phone}</a>
+  <button class="btn-ghost" onclick="copyMail()">📧 复制邮箱</button>
+  <button class="btn-ghost" onclick="navigator.clipboard.writeText('${resume.wechat}');alert('微信号已复制')">💬 复制微信</button>
+`;
+window.copyMail = ()=>{
+  navigator.clipboard.writeText(fullEmail).then(()=>alert("邮箱已复制："+fullEmail));
+};
+
+const hlWrap = document.getElementById('highlightsWrap');
+resume.highlights.forEach(h=>{
+  hlWrap.innerHTML += `<div class="card"><h3>${h.title}</h3><p>${h.desc}</p></div>`;
+});
+
+const tabBtns = document.querySelectorAll('.tab-btn');
+tabBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>switchTab(btn));
+  btn.addEventListener('keydown',e=>{
+    if(e.key === 'ArrowRight'){e.preventDefault();const n=btn.nextElementSibling||tabBtns[0];n.focus();switchTab(n);}
+    if(e.key === 'ArrowLeft'){e.preventDefault();const p=btn.previousElementSibling||tabBtns[tabBtns.length-1];p.focus();switchTab(p);}
+  });
+});
+function switchTab(activeBtn){
+  tabBtns.forEach(b=>b.setAttribute('aria-selected','false'));
+  activeBtn.setAttribute('aria-selected','true');
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(activeBtn.getAttribute('aria-controls')).classList.add('active');
+}
+
+const internPanel = document.getElementById('tab-intern');
+const campusPanel = document.getElementById('tab-campus');
+internPanel.innerHTML = `<p style="color:var(--text-light)">暂无实习经历，可后续补充</p>`;
+campusPanel.innerHTML = `<p style="color:var(--text-light)">校园实践待补充</p>`;
+
+const projWrap = document.getElementById('projectCards');
+resume.projects.forEach(p=>{
+  projWrap.innerHTML += `
+    <div class="card">
+      <h3>${p.name}</h3>
+      <div style="color:var(--text-light);font-size:0.9rem;margin-bottom:0.5rem">${p.type} ${p.time||''}</div>
+      <p><strong>场景：</strong>${p.situation}</p>
+      <p><strong>行动：</strong>${p.action}</p>
+      <p><strong>成果：</strong>${p.result}</p>
+      <p><strong>亮点：</strong>${p.highlight}</p>
+      ${p.link ? `<p><a href="${p.link}" target="_blank">查看项目</a></p>`:''}
+    </div>`;
+});
+
+const skillWrap = document.getElementById('skillMatrix');
+resume.skillMatrix.forEach(cat=>{
+  let html = `<div class="card"><h3>${cat.cat}</h3>`;
+  cat.items.forEach(s=>{
+    html += `<div class="skill-row">
+      <div class="skill-label"><span>${s.name}</span><span>${s.pct}%</span></div>
+      <div class="skill-bar"><div class="skill-fill" style="width:${s.pct}%"></div></div>
+    </div>`;
+  });
+  skillWrap.innerHTML += html + `</div>`;
+});
+
+document.getElementById('eduCertWrap').innerHTML = `
+  <div class="card">
+    <h3>教育背景</h3>
+    <p><strong>${resume.education.school}</strong>｜${resume.education.major}</p>
+    <p>核心课程：${resume.education.courses}</p>
+    <p>${resume.education.english}</p>
+    <p>学习方向：${resume.education.direction}</p>
+  </div>
+  <div class="card">
+    <h3>证书与奖项</h3>
+    <p style="color:var(--text-light)">待补充英语、编程、竞赛、奖学金等证书</p>
+  </div>`;
+
+document.getElementById('selfIntro').textContent = resume.selfDesc;
+
+const themeBtn = document.getElementById('themeBtn');
+const htmlEl = document.documentElement;
+const savedTheme = localStorage.getItem('cv-theme');
+if(savedTheme==='dark') htmlEl.setAttribute('data-theme','dark');
+themeBtn.onclick = ()=>{
+  if(htmlEl.hasAttribute('data-theme')){
+    htmlEl.removeAttribute('data-theme'); localStorage.setItem('cv-theme','light');
+  } else {
+    htmlEl.setAttribute('data-theme','dark'); localStorage.setItem('cv-theme','dark');
+  }
+};
+
+document.getElementById('printBtn').onclick = ()=>window.print();
+
+const backTopBtn = document.getElementById('backTop');
+window.addEventListener('scroll',()=>{
+  backTopBtn.classList.toggle('visible', window.scrollY>300);
+});
+backTopBtn.onclick = ()=>window.scrollTo({top:0,behavior:'smooth'});
+</script>
+</body>
+</html>
